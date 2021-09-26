@@ -1,10 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nosql_database/src/nosql_database_impl.dart';
+import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_memory.dart';
 
 void main() {
   late NosqlDatabaseImpl sut;
+  late Database db;
 
   final fruitsStore = 'fruitsStore';
   final animalsStore = 'animalsStore';
@@ -46,7 +48,7 @@ void main() {
     return Future(() async {
       final factory = newDatabaseFactoryMemory();
 
-      final db = await factory.openDatabase('test.db');
+      db = await factory.openDatabase('test.db');
 
       sut = NosqlDatabaseImpl(db);
     });
@@ -100,4 +102,6 @@ void main() {
 
     expect(result, [firstAnimal, thirdAnimal]);
   });
+
+  tearDown(() => db.close);
 }
