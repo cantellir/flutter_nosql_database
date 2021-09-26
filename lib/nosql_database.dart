@@ -1,7 +1,4 @@
 library nosql_database;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/make_nosql_database.dart';
+export 'src/nosql_database.dart';
