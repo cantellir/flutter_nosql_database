@@ -12,4 +12,9 @@ abstract class NosqlDatabase {
     String fieldName,
     String fieldValue,
   );
+  Future<void> deleteByFilter(
+    String storeKey,
+    String fieldName,
+    String fieldValue,
+  );
 }

@@ -103,5 +103,29 @@ void main() {
     expect(result, [firstAnimal, thirdAnimal]);
   });
 
+  test('should delete the correct map', () async {
+    await sut.saveDocument(animalsStore, firstAnimal);
+    await sut.saveDocument(animalsStore, secondAnimal);
+    await sut.saveDocument(animalsStore, thirdAnimal);
+
+    await sut.deleteByFilter(animalsStore, 'id', '1');
+
+    final result = await sut.loadDocuments(animalsStore);
+
+    expect(result, [secondAnimal, thirdAnimal]);
+  });
+
+  test('should delete a list of map by filter', () async {
+    await sut.saveDocument(animalsStore, firstAnimal);
+    await sut.saveDocument(animalsStore, secondAnimal);
+    await sut.saveDocument(animalsStore, thirdAnimal);
+
+    await sut.deleteByFilter(animalsStore, 'family', 'mammal');
+
+    final result = await sut.loadDocuments(animalsStore);
+
+    expect(result, [secondAnimal]);
+  });
+
   tearDown(() => db.close);
 }

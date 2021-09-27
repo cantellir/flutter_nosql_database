@@ -68,4 +68,15 @@ class NosqlDatabaseImpl implements NosqlDatabase {
     final result = await store.find(_database!, finder: finder);
     return result.map((item) => item.value).toList();
   }
+
+  @override
+  Future<void> deleteByFilter(
+    String storeKey,
+    String fieldName,
+    String fieldValue,
+  ) async {
+    final store = intMapStoreFactory.store(storeKey);
+    final finder = Finder(filter: Filter.equals(fieldName, fieldValue));
+    await store.delete(_database!, finder: finder);
+  }
 }
