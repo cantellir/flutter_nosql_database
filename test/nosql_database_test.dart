@@ -127,5 +127,30 @@ void main() {
     expect(result, [secondAnimal]);
   });
 
+  test(
+      'should return an empty list when load documents and '
+      'there is no saved data', () async {
+    final result = await sut.loadDocuments(animalsStore);
+
+    expect(result.isEmpty, true);
+  });
+
+  test(
+      'should return an empty list when load documents by filter and '
+      'there is no saved data', () async {
+    final result =
+        await sut.loadDocumentsByFilter(animalsStore, 'family', 'mammal');
+
+    expect(result.isEmpty, true);
+  });
+
+  test(
+      'should return an empty map when load first document and '
+      'there is saved data', () async {
+    final result = await sut.loadFirstDocument(animalsStore, 'id', '1');
+
+    expect(result.isEmpty, true);
+  });
+
   tearDown(() => db.close);
 }
