@@ -70,7 +70,19 @@ class NosqlDatabaseImpl implements NosqlDatabase {
   }
 
   @override
-  Future<void> deleteByFilter(
+  Future<void> updateDocumentsByFilter(
+    String storeKey,
+    Map<String, Object> document,
+    String fieldName,
+    String fieldValue,
+  ) async {
+    final store = intMapStoreFactory.store(storeKey);
+    final finder = Finder(filter: Filter.equals(fieldName, fieldValue));
+    await store.update(_database!, document, finder: finder);
+  }
+
+  @override
+  Future<void> deleteDocumentsByFilter(
     String storeKey,
     String fieldName,
     String fieldValue,

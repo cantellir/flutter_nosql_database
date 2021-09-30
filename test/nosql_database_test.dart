@@ -103,12 +103,51 @@ void main() {
     expect(result, [firstAnimal, thirdAnimal]);
   });
 
+  test('should update the correct map when update by id', () async {
+    await sut.saveDocument(animalsStore, firstAnimal);
+    await sut.saveDocument(animalsStore, secondAnimal);
+    await sut.saveDocument(animalsStore, thirdAnimal);
+
+    final updatedAnimal = {
+      'id': '1',
+      'family': 'mammal',
+      'name': 'pig',
+      'hasTail': true,
+    };
+
+    await sut.updateDocumentsByFilter(animalsStore, updatedAnimal, 'id', '1');
+
+    final result = await sut.loadDocuments(animalsStore);
+
+    expect(result, [updatedAnimal, secondAnimal, thirdAnimal]);
+  });
+
+  test('should update the correct maps when update by family', () async {
+    await sut.saveDocument(animalsStore, firstAnimal);
+    await sut.saveDocument(animalsStore, secondAnimal);
+    await sut.saveDocument(animalsStore, thirdAnimal);
+
+    final updatedAnimal = {
+      'id': '1',
+      'family': 'mammal',
+      'name': 'pig',
+      'hasTail': true,
+    };
+
+    await sut.updateDocumentsByFilter(
+        animalsStore, updatedAnimal, 'family', 'mammal');
+
+    final result = await sut.loadDocuments(animalsStore);
+
+    expect(result, [updatedAnimal, secondAnimal, updatedAnimal]);
+  });
+
   test('should delete the correct map', () async {
     await sut.saveDocument(animalsStore, firstAnimal);
     await sut.saveDocument(animalsStore, secondAnimal);
     await sut.saveDocument(animalsStore, thirdAnimal);
 
-    await sut.deleteByFilter(animalsStore, 'id', '1');
+    await sut.deleteDocumentsByFilter(animalsStore, 'id', '1');
 
     final result = await sut.loadDocuments(animalsStore);
 
@@ -120,7 +159,7 @@ void main() {
     await sut.saveDocument(animalsStore, secondAnimal);
     await sut.saveDocument(animalsStore, thirdAnimal);
 
-    await sut.deleteByFilter(animalsStore, 'family', 'mammal');
+    await sut.deleteDocumentsByFilter(animalsStore, 'family', 'mammal');
 
     final result = await sut.loadDocuments(animalsStore);
 

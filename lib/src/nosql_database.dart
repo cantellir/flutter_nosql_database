@@ -12,7 +12,13 @@ abstract class NosqlDatabase {
     String fieldName,
     String fieldValue,
   );
-  Future<void> deleteByFilter(
+  Future<void> updateDocumentsByFilter(
+    String storeKey,
+    Map<String, Object> document,
+    String fieldName,
+    String fieldValue,
+  );
+  Future<void> deleteDocumentsByFilter(
     String storeKey,
     String fieldName,
     String fieldValue,
